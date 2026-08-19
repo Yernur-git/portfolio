@@ -7,6 +7,11 @@ type Locale = "en" | "ru";
 type WorkKind = "video" | "photo";
 type Filter = "selected" | "video" | "photo" | "cars" | "people";
 
+type Service = {
+  title: string;
+  body: string;
+};
+
 type Copy = {
   title: string;
   role: string;
@@ -24,7 +29,7 @@ type Copy = {
   people: string;
   aboutTitle: string;
   aboutBody: string;
-  services: string[];
+  services: Service[];
   contactTitle: string;
   contactBody: string;
   open: string;
@@ -65,8 +70,25 @@ const copy: Record<Locale, Copy> = {
     people: "People",
     aboutTitle: "About",
     aboutBody:
-      "Yernur Visuals is a personal photo, video and editing portfolio focused on automotive visuals, portraits, reels, podcast clips and short commercial work.",
-    services: ["Shooting", "Editing", "Subtitles", "Sound design"],
+      "I shoot and edit short visual work for reels, cars, people and small commercial projects. I can help before the shoot with the idea, hook, simple text and shot plan, then handle filming, editing, captions, sound and social export.",
+    services: [
+      {
+        title: "Idea and hook",
+        body: "Short concept, opening line and shot direction before we shoot.",
+      },
+      {
+        title: "Shoot",
+        body: "Cars, portraits, reels, podcast clips and small commercial videos.",
+      },
+      {
+        title: "Edit",
+        body: "Rhythm cuts, captions, sound, light graphics and clean export.",
+      },
+      {
+        title: "Formats",
+        body: "Reels, TikTok, social ads, podcast shorts, car edits and photo sets.",
+      },
+    ],
     contactTitle: "Contact",
     contactBody: "For shoots, reels, edits and small commercial projects.",
     open: "Open",
@@ -91,8 +113,25 @@ const copy: Record<Locale, Copy> = {
     people: "Люди",
     aboutTitle: "О проекте",
     aboutBody:
-      "Yernur Visuals - личное портфолио о съемке и монтаже: авто, портреты, рилсы, подкасты и короткие коммерческие ролики.",
-    services: ["Съемка", "Монтаж", "Субтитры", "Звук"],
+      "Я снимаю и монтирую короткий визуальный контент для рилсов, авто, людей и небольших коммерческих задач. Могу помочь до съемки: идея, хук, простой текст, план кадров, потом съемка, монтаж, субтитры, звук и экспорт под соцсети.",
+    services: [
+      {
+        title: "Идея и хук",
+        body: "Короткая задумка, первая фраза и направление кадров до съемки.",
+      },
+      {
+        title: "Съемка",
+        body: "Авто, портреты, рилсы, подкаст-клипы и небольшие коммерческие видео.",
+      },
+      {
+        title: "Монтаж",
+        body: "Ритм, субтитры, звук, простая графика и чистый экспорт.",
+      },
+      {
+        title: "Форматы",
+        body: "Reels, TikTok, таргет, podcast shorts, авто-эдиты и фотосеты.",
+      },
+    ],
     contactTitle: "Контакты",
     contactBody: "Для съемок, рилсов, эдитов и небольших коммерческих проектов.",
     open: "Открыть",
@@ -111,8 +150,8 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["selected", "video", "cars"],
     year: "2025",
-    note: "Automotive edit with captions and rhythm cuts.",
-    noteRu: "Авто-эдит с субтитрами и ритмичным монтажом.",
+    note: "Car edit with captions, beat cuts and a clean vertical frame.",
+    noteRu: "Авто-эдит с субтитрами, бит-катами и чистым вертикальным кадром.",
     driveId: "1qII4RbkJjze8JjCsS7qVN07IBihuKebQ",
     aspect: "portrait",
     featured: true,
@@ -124,8 +163,8 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["selected", "video", "people"],
     year: "2026",
-    note: "Interview reel with hook, subtitles, animation and sound.",
-    noteRu: "Интервью-ролик с хуком, субтитрами, анимацией и звуком.",
+    note: "Podcast clip with a hook, subtitles, small motion details and sound.",
+    noteRu: "Подкаст-клип с хуком, субтитрами, маленькими motion-деталями и звуком.",
     driveId: "1LOSPEA-JYydg2Baiz4XF6wzbfXaRBVCY",
     aspect: "portrait",
     featured: true,
@@ -137,8 +176,8 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["selected", "video"],
     year: "2026",
-    note: "Short cinematic reel built around tension and sound.",
-    noteRu: "Короткий киношный ролик с напряжением и звуком.",
+    note: "Short scene edit built on timing, tension and sound.",
+    noteRu: "Короткая сцена на тайминге, напряжении и звуке.",
     driveId: "1_FOnV_O4gmHMIM7_U7zDQXajn5iHLQSS",
     aspect: "portrait",
     featured: true,
@@ -150,8 +189,8 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["selected", "video"],
     year: "2025",
-    note: "Target ad with talking intro and edit sequence.",
-    noteRu: "Ролик для таргета: говорящая подводка и эдит.",
+    note: "Ad-style reel: talking intro, location shots and edit sequence.",
+    noteRu: "Рилс под рекламу: говорящая подводка, кадры места и эдит.",
     driveId: "1wVXVg7C7D0Yr-D8ibn03BuE2AyinT2pM",
     aspect: "portrait",
     featured: true,
@@ -163,8 +202,8 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["selected", "video", "cars"],
     year: "2025",
-    note: "Trend-based automotive edit.",
-    noteRu: "Трендовый авто-эдит.",
+    note: "Trend car edit with quick cuts and simple caption work.",
+    noteRu: "Трендовый авто-эдит с быстрым монтажом и субтитрами.",
     driveId: "1QUBfoKyAsaYFf5VX-lqh3mtZ2kziJs6X",
     aspect: "portrait",
   },
@@ -175,8 +214,8 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["selected", "video", "cars"],
     year: "2025",
-    note: "Playful character edit for a car.",
-    noteRu: "Игровой эдит, где машина получает характер.",
+    note: "Car edit with a playful character idea.",
+    noteRu: "Авто-эдит с простой character-идеей.",
     driveId: "1y_iroULf4BRbElr54Ncam8Tz_hfqRb41",
     aspect: "portrait",
   },
@@ -187,8 +226,8 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["video", "cars"],
     year: "2025",
-    note: "Fast automotive trend edit.",
-    noteRu: "Быстрый трендовый авто-эдит.",
+    note: "Fast trend edit for a car reel.",
+    noteRu: "Быстрый трендовый эдит для авто-ролика.",
     driveId: "1sXokGkL-nBga0ffjP_OtCfgPDaa740lk",
     aspect: "portrait",
   },
@@ -199,8 +238,8 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["selected", "video", "cars"],
     year: "2025",
-    note: "Short car edit with atmospheric opening.",
-    noteRu: "Короткий авто-эдит с атмосферным началом.",
+    note: "Short car edit with a quiet opening and mood.",
+    noteRu: "Короткий авто-эдит со спокойным началом и настроением.",
     driveId: "1_mzHTuNgQwIjQpPxFFdLfNhSLggGQfs8",
     aspect: "portrait",
   },
@@ -211,8 +250,8 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["video", "cars"],
     year: "2025",
-    note: "Automotive edit with clean motion beats.",
-    noteRu: "Авто-эдит с чистыми монтажными акцентами.",
+    note: "Car reel with movement and beat accents.",
+    noteRu: "Авто-ролик с движением и акцентами в бит.",
     driveId: "1OSgMfNwpfuwtHPAykwTVi-fixLsYWBvy",
     aspect: "portrait",
   },
@@ -223,8 +262,8 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["video", "cars"],
     year: "2025",
-    note: "Car reel with movement and caption work.",
-    noteRu: "Авто-ролик с движением и субтитрами.",
+    note: "Car reel built around motion, captions and rhythm.",
+    noteRu: "Авто-ролик на движении, субтитрах и ритме.",
     driveId: "18fmFaW4FU6H-7xq07B6-56FXDdLVqef_",
     aspect: "portrait",
   },
@@ -235,7 +274,7 @@ const works: WorkItem[] = [
     kind: "video",
     tags: ["video"],
     year: "2024",
-    note: "Practical screen effect for headlight options.",
+    note: "Practical screen effect for lighting options.",
     noteRu: "Практический экран-эффект с выбором света фар.",
     driveId: "1FgPmPWnG_At4k2nSepCApAK5cvY1DRUB",
     aspect: "portrait",
@@ -247,8 +286,8 @@ const works: WorkItem[] = [
     kind: "photo",
     tags: ["selected", "photo", "cars"],
     year: "2024",
-    note: "Automotive photo series.",
-    noteRu: "Серия автомобильных фото.",
+    note: "Car photo set with clean color and tight framing.",
+    noteRu: "Авто-фотосет с чистым цветом и плотной подачей.",
     driveId: "1Xnz3NoPOlakMJUZov96ShzdR8zPlGHyM",
     aspect: "wide",
     featured: true,
@@ -260,8 +299,8 @@ const works: WorkItem[] = [
     kind: "photo",
     tags: ["selected", "photo", "cars"],
     year: "2024",
-    note: "Premium car still.",
-    noteRu: "Кадр премиальной машины.",
+    note: "Side detail from the same car set.",
+    noteRu: "Боковая деталь из той же серии.",
     driveId: "1LqtQQe0rewOoNN1pvnOYcP8kpuq7LtVN",
     aspect: "square",
   },
@@ -272,8 +311,8 @@ const works: WorkItem[] = [
     kind: "photo",
     tags: ["selected", "photo", "cars"],
     year: "2024",
-    note: "Urban automotive frame.",
-    noteRu: "Городской авто-кадр.",
+    note: "Urban car frame with brick, reflections and low contrast.",
+    noteRu: "Городской кадр: машина, кирпич, отражения и низкий контраст.",
     driveId: "16j5d9jiU77IIpl8ZsoUavPjL8nAzFUHB",
     aspect: "wide",
   },
@@ -284,7 +323,7 @@ const works: WorkItem[] = [
     kind: "photo",
     tags: ["selected", "photo", "cars"],
     year: "2024",
-    note: "Clean car still with open background.",
+    note: "Clean car frame with an open background.",
     noteRu: "Чистый авто-кадр с открытым фоном.",
     driveId: "1nDuGEYQFoP9PF0SlQedyWD6eW-pYB3xH",
     aspect: "wide",
@@ -296,8 +335,8 @@ const works: WorkItem[] = [
     kind: "photo",
     tags: ["selected", "photo", "cars"],
     year: "2024",
-    note: "Close-up automotive detail.",
-    noteRu: "Крупный план автомобильной детали.",
+    note: "Close detail shot of the headlight.",
+    noteRu: "Крупная деталь фары.",
     driveId: "1aUEa-UjqVmpMBykP_ihKst_PnTdwEE_-",
     aspect: "square",
   },
@@ -308,8 +347,8 @@ const works: WorkItem[] = [
     kind: "photo",
     tags: ["photo", "cars"],
     year: "2024",
-    note: "Color and reflection study.",
-    noteRu: "Цвет и отражения в деталях.",
+    note: "Detail frame focused on color and reflections.",
+    noteRu: "Деталь с фокусом на цвет и отражения.",
     driveId: "1kM-bpd8DpsPp0xhzg1XZivLMPwKv6wd7",
     aspect: "square",
   },
@@ -320,8 +359,8 @@ const works: WorkItem[] = [
     kind: "photo",
     tags: ["selected", "photo", "people"],
     year: "2025",
-    note: "Portrait frame with clean negative space.",
-    noteRu: "Портрет с чистым свободным пространством.",
+    note: "Portrait frame with open space and strong color.",
+    noteRu: "Портрет с открытым пространством и сильным цветом.",
     driveId: "1jSoT8wPfRdXIGndgNnH2Bvx9EVBh1GwB",
     aspect: "square",
   },
@@ -344,8 +383,8 @@ const works: WorkItem[] = [
     kind: "photo",
     tags: ["photo", "people"],
     year: "2025",
-    note: "Outdoor portrait series.",
-    noteRu: "Портретная серия на природе.",
+    note: "Outdoor portrait frame from a mountain set.",
+    noteRu: "Портретный кадр из горной серии.",
     driveId: "1AKhgcs8CYD7bEUij1OjjEuhlbmuI9Gl8",
     aspect: "wide",
   },
@@ -356,7 +395,7 @@ const works: WorkItem[] = [
     kind: "photo",
     tags: ["photo", "people"],
     year: "2024",
-    note: "Editorial-style portrait.",
+    note: "Portrait with a simple editorial mood.",
     noteRu: "Портрет в editorial-настроении.",
     driveId: "1hi9V24Qn9aZ4ImkbyndfogT3ok1MoHHu",
     aspect: "portrait",
@@ -457,8 +496,8 @@ export default function Home() {
           <h2>{t.allWork}</h2>
           <p>
             {locale === "en"
-              ? "Reels, edits and stills selected for pace, light and clear client-facing presentation."
-              : "Рилсы, эдиты и фотографии с фокусом на ритм, свет и подачу."}
+              ? "Reels, edits and stills with pace, light and a clean presentation."
+              : "Рилсы, эдиты и фотографии: ритм, свет и чистая подача."}
           </p>
         </div>
 
@@ -512,13 +551,19 @@ export default function Home() {
       </section>
 
       <section id="about" className="about-section">
-        <div>
+        <div className="about-copy">
           <h2>{t.aboutTitle}</h2>
           <p>{t.aboutBody}</p>
         </div>
-        <ul className="service-list" aria-label="Services">
+        <ul
+          className="service-list"
+          aria-label={locale === "en" ? "Services" : "Что я делаю"}
+        >
           {t.services.map((service) => (
-            <li key={service}>{service}</li>
+            <li key={service.title}>
+              <h3>{service.title}</h3>
+              <p>{service.body}</p>
+            </li>
           ))}
         </ul>
       </section>

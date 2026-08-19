@@ -198,7 +198,7 @@ img {
 
 .hero-intro,
 .section-heading p,
-.about-section p,
+.about-copy p,
 .contact-section p,
 .work-meta p,
 .viewer-topbar p {
@@ -488,7 +488,7 @@ img {
   padding-top: clamp(4rem, 8vw, 7rem);
 }
 
-.about-section p {
+.about-copy p {
   font-size: clamp(1rem, 2vw, 1.25rem);
   margin: 1.2rem 0 0;
   max-width: 44rem;
@@ -497,17 +497,37 @@ img {
 .service-list {
   display: grid;
   gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .service-list li {
-  background: linear-gradient(135deg, rgba(242, 240, 234, 0.08), rgba(242, 240, 234, 0.03));
+  background: linear-gradient(
+    135deg,
+    rgba(242, 240, 234, 0.08),
+    rgba(242, 240, 234, 0.03)
+  );
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 8px;
   color: var(--text);
+  min-height: 8.1rem;
   padding: 1rem;
+}
+
+.service-list h3 {
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.service-list p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  margin: 0.45rem 0 0;
 }
 
 .contact-section {
@@ -801,6 +821,10 @@ img {
     align-items: start;
     flex-direction: column;
     gap: 0.35rem;
+  }
+
+  .service-list {
+    grid-template-columns: 1fr;
   }
 
   .site-footer {
