@@ -577,32 +577,34 @@ export default function Home() {
                 {t.close}
               </button>
             </div>
-            {activeWork.kind === "video" ? (
-              <iframe
-                title={locale === "en" ? activeWork.title : activeWork.titleRu}
-                className={
-                  activeWork.aspect === "portrait" ? "portrait-frame" : undefined
-                }
-                src={drivePreview(activeWork.driveId)}
-                allow="autoplay"
-                allowFullScreen
-              />
-            ) : (
-              <a
-                href={driveView(activeWork.driveId)}
-                target="_blank"
-                rel="noreferrer"
-                className="viewer-image"
-              >
-                <img
-                  src={thumb(activeWork.driveId, 2200)}
-                  alt={locale === "en" ? activeWork.title : activeWork.titleRu}
-                  width={2200}
-                  height={1600}
-                  referrerPolicy="no-referrer"
+            <div className="viewer-stage">
+              {activeWork.kind === "video" ? (
+                <iframe
+                  title={locale === "en" ? activeWork.title : activeWork.titleRu}
+                  className={
+                    activeWork.aspect === "portrait" ? "portrait-frame" : undefined
+                  }
+                  src={drivePreview(activeWork.driveId)}
+                  allow="autoplay"
+                  allowFullScreen
                 />
-              </a>
-            )}
+              ) : (
+                <a
+                  href={driveView(activeWork.driveId)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="viewer-image"
+                >
+                  <img
+                    src={thumb(activeWork.driveId, 2200)}
+                    alt={locale === "en" ? activeWork.title : activeWork.titleRu}
+                    width={2200}
+                    height={1600}
+                    referrerPolicy="no-referrer"
+                  />
+                </a>
+              )}
+            </div>
           </div>
         </div>
       ) : null}
