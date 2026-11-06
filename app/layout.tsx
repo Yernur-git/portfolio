@@ -15,12 +15,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Yernur Visuals",
   description:
-    "Photo, video and editing portfolio for reels, automotive visuals, portraits and short commercial work.",
+    "Портфолио фотографа, видеографа и монтажёра: рилсы, авто, портреты и коммерческие проекты.",
   openGraph: {
     title: "Yernur Visuals",
     description:
-      "Kazakhstan-based photo, video and editing portfolio by Yernur.",
+      "Фото, видео и монтаж от Ернура. Казахстан.",
     type: "website",
+    locale: "ru_RU",
   },
   icons: {
     icon: "/favicon.svg",
@@ -39,16 +40,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <head>
-        <link rel="preconnect" href="https://drive.google.com" />
         <link rel="preconnect" href="https://lh3.googleusercontent.com" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <a href="#work" className="skip-link">
-          Skip to work
+          Перейти к работам
         </a>
         {children}
       </body>

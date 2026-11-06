@@ -31,7 +31,8 @@ test("server-renders the portfolio shell", async () => {
   const html = await response.text();
   assert.match(html, /<title>Yernur Visuals<\/title>/i);
   assert.match(html, /Yernur Visuals/);
-  assert.match(html, /Photographer \/ Videographer \/ Editor/);
+  assert.match(html, /Фотограф \/ Видеограф \/ Монтажер/);
+  assert.match(html, /<html[^>]+lang="ru"/);
   assert.match(html, /ernur_shots/);
   assert.match(html, /Kaorukooo0/);
   assert.match(html, /yernurcontact@gmail\.com/);

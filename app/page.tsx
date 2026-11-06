@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Locale = "en" | "ru";
 type WorkKind = "video" | "photo";
@@ -46,7 +46,7 @@ type WorkItem = {
   year: string;
   note: string;
   noteRu: string;
-  driveId: string;
+  driveId?: string;
   aspect: "wide" | "portrait" | "square" | "tall";
   featured?: boolean;
 };
@@ -144,6 +144,41 @@ const filters: Filter[] = ["selected", "video", "photo", "cars", "people"];
 
 const works: WorkItem[] = [
   {
+    id: "first-me",
+    title: "First Me",
+    titleRu: "First Me",
+    kind: "video",
+    tags: ["selected", "video", "people"],
+    year: "2026",
+    note: "",
+    noteRu: "",
+    aspect: "portrait",
+    featured: true,
+  },
+  {
+    id: "alikh-man-trendy",
+    title: "Alikh Man Trendy",
+    titleRu: "Alikh Man Trendy",
+    kind: "video",
+    tags: ["selected", "video", "people"],
+    year: "2026",
+    note: "",
+    noteRu: "",
+    aspect: "wide",
+    featured: true,
+  },
+  {
+    id: "civic",
+    title: "Civic",
+    titleRu: "Civic",
+    kind: "video",
+    tags: ["video", "cars"],
+    year: "2026",
+    note: "",
+    noteRu: "",
+    aspect: "portrait",
+  },
+  {
     id: "porsche-slay",
     title: "Porsche Edit",
     titleRu: "Porsche Edit",
@@ -187,13 +222,12 @@ const works: WorkItem[] = [
     title: "PC Club Ad",
     titleRu: "PC Club Ad",
     kind: "video",
-    tags: ["selected", "video"],
+    tags: ["video"],
     year: "2025",
     note: "Ad-style reel: talking intro, location shots and edit sequence.",
     noteRu: "Рилс под рекламу: говорящая подводка, кадры места и эдит.",
     driveId: "1wVXVg7C7D0Yr-D8ibn03BuE2AyinT2pM",
     aspect: "portrait",
-    featured: true,
   },
   {
     id: "gelen-trend",
@@ -212,7 +246,7 @@ const works: WorkItem[] = [
     title: "Lonely Car",
     titleRu: "Lonely Car",
     kind: "video",
-    tags: ["selected", "video", "cars"],
+    tags: ["video", "cars"],
     year: "2025",
     note: "Car edit with a playful character idea.",
     noteRu: "Авто-эдит с простой character-идеей.",
@@ -229,14 +263,14 @@ const works: WorkItem[] = [
     note: "Fast trend edit for a car reel.",
     noteRu: "Быстрый трендовый эдит для авто-ролика.",
     driveId: "1sXokGkL-nBga0ffjP_OtCfgPDaa740lk",
-    aspect: "portrait",
+    aspect: "wide",
   },
   {
     id: "audi-r8",
     title: "Audi R8",
     titleRu: "Audi R8",
     kind: "video",
-    tags: ["selected", "video", "cars"],
+    tags: ["video", "cars"],
     year: "2025",
     note: "Short car edit with a quiet opening and mood.",
     noteRu: "Короткий авто-эдит со спокойным началом и настроением.",
@@ -253,7 +287,7 @@ const works: WorkItem[] = [
     note: "Car reel with movement and beat accents.",
     noteRu: "Авто-ролик с движением и акцентами в бит.",
     driveId: "1OSgMfNwpfuwtHPAykwTVi-fixLsYWBvy",
-    aspect: "portrait",
+    aspect: "wide",
   },
   {
     id: "bmw-5s",
@@ -402,23 +436,81 @@ const works: WorkItem[] = [
   },
 ];
 
-function thumb(id: string, size = 1600) {
+function thumb(id: string | undefined, size = 1600) {
   return `https://lh3.googleusercontent.com/d/${id}=w${size}`;
 }
 
-function driveView(id: string) {
+function driveView(id: string | undefined) {
   return `https://drive.google.com/file/d/${id}/view`;
 }
 
-function drivePreview(id: string) {
-  return `https://drive.google.com/file/d/${id}/preview`;
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+function videoSource(item: WorkItem) {
+  return `${basePath}/videos/${item.id}.mp4`;
+}
+
+function poster(item: WorkItem, size: number) {
+  return item.kind === "video"
+    ? `${basePath}/videos/${item.id}.jpg`
+    : thumb(item.driveId, size);
+}
+
+function VideoPlayer({ item, locale }: { item: WorkItem; locale: Locale }) {
+  const [failed, setFailed] = useState(false);
+  return (
+    <>
+      <video
+        className="portfolio-video"
+        src={videoSource(item)}
+        poster={poster(item, 1100)}
+        controls
+        playsInline
+        autoPlay
+        preload="metadata"
+        aria-label={locale === "ru" ? "Видеоплеер" : "Video player"}
+        onError={() => setFailed(true)}
+      />
+      {failed && (
+        <p className="player-error" role="alert">
+          {locale === "ru" ? "Не удалось загрузить видео. " : "The video could not be loaded. "}
+          <a href={videoSource(item)} download>
+            {locale === "ru" ? "Скачать MP4" : "Download MP4"}
+          </a>
+        </p>
+      )}
+    </>
+  );
 }
 
 export default function Home() {
-  const [locale, setLocale] = useState<Locale>("en");
+  const [locale, setLocale] = useState<Locale>("ru");
   const [activeFilter, setActiveFilter] = useState<Filter>("selected");
   const [activeWork, setActiveWork] = useState<WorkItem | null>(null);
   const t = copy[locale];
+  const viewerRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    const skipLink = document.querySelector(".skip-link");
+    if (skipLink) skipLink.textContent = locale === "ru" ? "Перейти к работам" : "Skip to work";
+  }, [locale]);
+
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!activeWork || !viewer) return;
+    viewer.showModal();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      viewer.close();
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [activeWork]);
+
+  const openLabel = (item: WorkItem) => item.kind === "video"
+    ? (locale === "ru" ? "Смотреть видео" : "Play video")
+    : `${t.open} ${locale === "en" ? item.title : item.titleRu}`;
 
   const visibleWorks = useMemo(() => {
     return works.filter((work) => work.tags.includes(activeFilter));
@@ -432,12 +524,12 @@ export default function Home() {
         <a
           href="#top"
           className="brand-link"
-          aria-label="Yernur Visuals home"
+          aria-label={locale === "ru" ? "Yernur Visuals — главная" : "Yernur Visuals home"}
           translate="no"
         >
           Yernur Visuals
         </a>
-        <nav aria-label="Primary navigation" className="nav-links">
+        <nav aria-label={locale === "ru" ? "Основная навигация" : "Primary navigation"} className="nav-links">
           <a href="#work">{t.navWork}</a>
           <a href="#about">{t.navAbout}</a>
           <a href="#contact">{t.navContact}</a>
@@ -445,7 +537,7 @@ export default function Home() {
             type="button"
             className="locale-toggle"
             onClick={() => setLocale(locale === "en" ? "ru" : "en")}
-            aria-label="Switch language"
+            aria-label={locale === "ru" ? "Switch to English" : "Переключить на русский"}
           >
             {locale === "en" ? "RU" : "EN"}
           </button>
@@ -468,17 +560,17 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-media" aria-label="Selected work preview">
+        <div className="hero-media" aria-label={locale === "ru" ? "Избранные работы" : "Selected work preview"}>
           {heroItems.map((item, index) => (
             <button
               key={item.id}
               type="button"
               className={`hero-frame hero-frame-${index + 1}`}
               onClick={() => setActiveWork(item)}
-              aria-label={`${t.open} ${locale === "en" ? item.title : item.titleRu}`}
+              aria-label={openLabel(item)}
             >
               <img
-                src={thumb(item.driveId, 1400)}
+                src={poster(item, 1400)}
                 alt=""
                 width={1400}
                 height={1800}
@@ -501,7 +593,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="filter-row" role="tablist" aria-label="Work filters">
+        <div className="filter-row" role="tablist" aria-label={locale === "ru" ? "Фильтры работ" : "Work filters"}>
           {filters.map((filter) => (
             <button
               key={filter}
@@ -526,25 +618,29 @@ export default function Home() {
                 type="button"
                 className="media-button"
                 onClick={() => setActiveWork(item)}
-                aria-label={`${t.open} ${locale === "en" ? item.title : item.titleRu}`}
+                aria-label={openLabel(item)}
               >
                 <img
-                  src={thumb(item.driveId, 1100)}
-                  alt={locale === "en" ? item.title : item.titleRu}
+                  src={poster(item, 1100)}
+                  alt={item.kind === "video" ? "" : locale === "en" ? item.title : item.titleRu}
                   width={1100}
                   height={1400}
                   loading="lazy"
                   referrerPolicy="no-referrer"
                 />
-                <span className="media-kind">{item.kind}</span>
+                {item.kind === "video" ? (
+                  <span className="play-button" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                  </span>
+                ) : <span className="media-kind">{t.photo}</span>}
               </button>
-              <div className="work-meta">
+              {item.kind === "photo" && <div className="work-meta">
                 <div>
                   <h3>{locale === "en" ? item.title : item.titleRu}</h3>
                   <p>{locale === "en" ? item.note : item.noteRu}</p>
                 </div>
                 <span>{item.year}</span>
-              </div>
+              </div>}
             </article>
           ))}
         </div>
@@ -595,11 +691,11 @@ export default function Home() {
       </footer>
 
       {activeWork ? (
-        <div
+        <dialog
+          ref={viewerRef}
           className="viewer"
-          role="dialog"
-          aria-modal="true"
-          aria-label={locale === "en" ? activeWork.title : activeWork.titleRu}
+          aria-label={openLabel(activeWork)}
+          onCancel={() => setActiveWork(null)}
         >
           <button
             type="button"
@@ -610,29 +706,22 @@ export default function Home() {
           />
           <div className="viewer-panel">
             <div className="viewer-topbar">
-              <div>
+              {activeWork.kind === "photo" && <div>
                 <h2>{locale === "en" ? activeWork.title : activeWork.titleRu}</h2>
                 <p>{locale === "en" ? activeWork.note : activeWork.noteRu}</p>
-              </div>
+              </div>}
               <button
                 type="button"
                 className="viewer-close"
+                autoFocus
                 onClick={() => setActiveWork(null)}
               >
                 {t.close}
               </button>
             </div>
-            <div className="viewer-stage">
+            <div className={activeWork.kind === "video" ? "viewer-stage video-stage" : "viewer-stage"}>
               {activeWork.kind === "video" ? (
-                <iframe
-                  title={locale === "en" ? activeWork.title : activeWork.titleRu}
-                  className={
-                    activeWork.aspect === "portrait" ? "portrait-frame" : undefined
-                  }
-                  src={drivePreview(activeWork.driveId)}
-                  allow="autoplay"
-                  allowFullScreen
-                />
+                <VideoPlayer key={activeWork.id} item={activeWork} locale={locale} />
               ) : (
                 <a
                   href={driveView(activeWork.driveId)}
@@ -651,7 +740,7 @@ export default function Home() {
               )}
             </div>
           </div>
-        </div>
+        </dialog>
       ) : null}
     </main>
   );
