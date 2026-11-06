@@ -632,15 +632,8 @@ export default function Home() {
                   <span className="play-button" aria-hidden="true">
                     <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
                   </span>
-                ) : <span className="media-kind">{t.photo}</span>}
+                ) : null}
               </button>
-              {item.kind === "photo" && <div className="work-meta">
-                <div>
-                  <h3>{locale === "en" ? item.title : item.titleRu}</h3>
-                  <p>{locale === "en" ? item.note : item.noteRu}</p>
-                </div>
-                <span>{item.year}</span>
-              </div>}
             </article>
           ))}
         </div>
@@ -670,6 +663,10 @@ export default function Home() {
           <p>{t.contactBody}</p>
         </div>
         <div className="contact-links">
+          <a href="https://wa.me/77474547235" target="_blank" rel="noreferrer">
+            WhatsApp
+            <span>+7 747 454 72 35</span>
+          </a>
           <a href="https://www.instagram.com/ernur_shots" target="_blank" rel="noreferrer">
             Instagram
             <span>@ernur_shots</span>
@@ -706,10 +703,6 @@ export default function Home() {
           />
           <div className="viewer-panel">
             <div className="viewer-topbar">
-              {activeWork.kind === "photo" && <div>
-                <h2>{locale === "en" ? activeWork.title : activeWork.titleRu}</h2>
-                <p>{locale === "en" ? activeWork.note : activeWork.noteRu}</p>
-              </div>}
               <button
                 type="button"
                 className="viewer-close"
