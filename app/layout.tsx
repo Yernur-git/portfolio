@@ -68,6 +68,9 @@ export const metadata: Metadata = {
   title: pageTitle,
   description,
   alternates: { canonical: siteUrl },
+  verification: {
+    google: "F3J_loaunQqmrR1_3-eIAsFlIYWmj2AYGWzu0sUl6YE",
+  },
   authors: [{ name: "Ернур", url: siteUrl }],
   robots: {
     index: true,
