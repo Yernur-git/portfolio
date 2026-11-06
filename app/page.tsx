@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import ScrollControls from "./scroll-controls";
 
 type Locale = "en" | "ru";
 type WorkKind = "video" | "photo";
@@ -55,9 +56,9 @@ const copy: Record<Locale, Copy> = {
   en: {
     title: "Yernur Visuals",
     role: "Photographer / Videographer / Editor",
-    place: "Kazakhstan",
+    place: "Almaty, Kazakhstan",
     intro:
-      "Cinematic edits, stills and short-form work for cars, people, podcasts and commercial formats.",
+      "I photograph cars and people, and shoot and edit reels, ads and podcast clips.",
     navWork: "Work",
     navAbout: "About",
     navContact: "Contact",
@@ -70,7 +71,7 @@ const copy: Record<Locale, Copy> = {
     people: "People",
     aboutTitle: "About",
     aboutBody:
-      "I shoot and edit short visual work for reels, cars, people and small commercial projects. I can help before the shoot with the idea, hook, simple text and shot plan, then handle filming, editing, captions, sound and social export.",
+      "I'm Yernur, a photographer, videographer and editor based in Almaty, Kazakhstan. I help with the idea and shot plan, then handle filming, editing, captions, graphics and sound for social media.",
     services: [
       {
         title: "Idea and hook",
@@ -98,11 +99,11 @@ const copy: Record<Locale, Copy> = {
   ru: {
     title: "Yernur Visuals",
     role: "Фотограф / Видеограф / Монтажер",
-    place: "Казахстан",
+    place: "Алматы, Казахстан",
     intro:
-      "Киношные эдиты, фотографии и короткий формат для авто, людей, подкастов и коммерческих задач.",
+      "Снимаю автомобили и людей. Монтирую рилсы, рекламные ролики и фрагменты подкастов.",
     navWork: "Работы",
-    navAbout: "О проекте",
+    navAbout: "Обо мне",
     navContact: "Контакт",
     viewWork: "Смотреть работы",
     contact: "Контакт",
@@ -111,9 +112,9 @@ const copy: Record<Locale, Copy> = {
     photo: "Фото",
     cars: "Авто",
     people: "Люди",
-    aboutTitle: "О проекте",
+    aboutTitle: "Обо мне",
     aboutBody:
-      "Я снимаю и монтирую короткий визуальный контент для рилсов, авто, людей и небольших коммерческих задач. Могу помочь до съемки: идея, хук, простой текст, план кадров, потом съемка, монтаж, субтитры, звук и экспорт под соцсети.",
+      "Я Ернур, фотограф, видеограф и монтажёр из Алматы. Помогаю с идеей и планом съёмки, снимаю и монтирую. Добавляю субтитры, графику и звук, готовлю видео для соцсетей.",
     services: [
       {
         title: "Идея и хук",
@@ -686,6 +687,8 @@ export default function Home() {
         <span translate="no">Yernur Visuals</span>
         <span>{t.role}</span>
       </footer>
+
+      <ScrollControls locale={locale} />
 
       {activeWork ? (
         <dialog
