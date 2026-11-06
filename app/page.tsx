@@ -145,6 +145,17 @@ const filters: Filter[] = ["selected", "video", "photo", "cars", "people"];
 
 const works: WorkItem[] = [
   {
+    id: "ferrari",
+    title: "Ferrari",
+    titleRu: "Ferrari",
+    kind: "video",
+    tags: ["video", "cars"],
+    year: "2026",
+    note: "",
+    noteRu: "",
+    aspect: "portrait",
+  },
+  {
     id: "first-me",
     title: "First Me",
     titleRu: "First Me",
